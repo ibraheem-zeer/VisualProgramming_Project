@@ -12,7 +12,7 @@ namespace Project.DAL.Data
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS01;Database=Ntier;Trusted_Connection=True;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS01;Database=VP_Project;Trusted_Connection=True;TrustServerCertificate=True");
         }
 
         DbSet<Teacher> Teacher { get; set; }
