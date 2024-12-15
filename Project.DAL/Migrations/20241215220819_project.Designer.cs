@@ -12,8 +12,8 @@ using Project.DAL.Data;
 namespace Project.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241215220156_init")]
-    partial class init
+    [Migration("20241215220819_project")]
+    partial class project
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
