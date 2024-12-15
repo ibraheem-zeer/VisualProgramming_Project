@@ -19,18 +19,18 @@ namespace Project.BLL.Interfaces
         Course GetCourse(int id);
         Exam GetExam(int id);
 
-        int CreateStudent(Student student);
-        int UpdateStudent(Student student);
-        int DeleteStudent(Student student);
-        int CreateTeacher(Teacher teacher);
-        int UpdateTeacher(Teacher teacher);
-        int DeleteTeacher(Teacher teacher);
-        int CreateCourse(Course course);
-        int UpdateCourse(Course course);
-        int DeleteCourse(Course course);
-        int CreateExam(Exam exam);
-        int UpdateExam(Exam exam);
-        int DeleteExam(Exam exam);
-        int ViewResult();
+        string CreateStudent(Student student);
+        string UpdateStudent(Student student);
+        string DeleteStudent(int id);
+        string CreateTeacher(Teacher teacher);
+        string UpdateTeacher(Teacher teacher);
+        string DeleteTeacher(int id);
+        string CreateCourse(Course course);
+        string UpdateCourse(Course course);
+        string DeleteCourse(int id);
+        string CreateExam(Exam exam);
+        string UpdateExam(Exam exam);
+        string DeleteExam(int id);
+        string ViewResult();
     }
 }

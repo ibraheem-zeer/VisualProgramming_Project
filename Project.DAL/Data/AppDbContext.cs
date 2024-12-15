@@ -8,19 +8,23 @@ using System.Threading.Tasks;
 
 namespace Project.DAL.Data
 {
-    internal class AppDbContext : DbContext
+    public class AppDbContext : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS01;Database=VP_Project;Trusted_Connection=True;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS01;Database=Ntier;Trusted_Connection=True;TrustServerCertificate=True");
         }
-
-        DbSet<Teacher> Teacher { get; set; }
-        DbSet<Student> Student { get; set; }
-        DbSet<Course> Course { get; set; }
-        DbSet<Exam> Exam { get; set; }
-        DbSet<Question> Question { get; set; }
-        DbSet<StudentCourse> StudentCourse { get; set; }
-        DbSet<StudentExam> StudentExam { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<StudentCourse>().HasKey(c => new {c.CourseId , c.StudentId} );
+            modelBuilder.Entity<StudentExam>().HasKey(c => new {c.ExamId , c.StudentId} );
+        }
+        public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<Student> Students { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<Exam> Exams { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<StudentCourse> StudentCourses { get; set; }
+        public DbSet<StudentExam> StudentExams { get; set; }
     }
 }
