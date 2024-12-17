@@ -31,7 +31,7 @@ namespace Project.BLL.repo
             }
             catch (Exception e)
             {
-                return "Internal Server Error";
+                return e.Message;
             }
         }
 
@@ -166,7 +166,6 @@ namespace Project.BLL.repo
         {
             try
             {
-
                 Student student = context.Students.Find(id);
 
                 if (student != null)

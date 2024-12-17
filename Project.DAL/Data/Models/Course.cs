@@ -15,7 +15,7 @@ namespace Project.DAL.Data.Models
 
         public int TeacherId { get; set; }
 
-        public Teacher Teacher { get; set; } = null!;
+        public Teacher? Teacher { get; set; }
         public ICollection<StudentCourse> Students { get; set; } = new HashSet<StudentCourse>();
     }
 }

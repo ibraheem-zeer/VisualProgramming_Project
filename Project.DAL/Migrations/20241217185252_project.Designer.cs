@@ -12,7 +12,7 @@ using Project.DAL.Data;
 namespace Project.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241215220819_project")]
+    [Migration("20241217185252_project")]
     partial class project
     {
         /// <inheritdoc />
