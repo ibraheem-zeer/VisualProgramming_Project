@@ -274,7 +274,5 @@ namespace VisualProgramming_Project
                 MessageBox.Show("Teacher has not assagin in courses");
             }
         }
-
-      
     }
 }
