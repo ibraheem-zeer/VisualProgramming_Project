@@ -14,6 +14,7 @@ namespace VisualProgramming_Project
 {
     public partial class AdminDashboard : Form
     {
+
         AdminRepo admin = new AdminRepo();
         public AdminDashboard()
         {
@@ -26,10 +27,13 @@ namespace VisualProgramming_Project
             teacherCollage.Clear();
             teacherPassword.Clear();
         }
-        void LoadTeacher()
+        void LoadTeachers()
         {
             teachersDataGridView.DataSource = admin.GetAllTeachers();
             teacherLabel.Text = $"Teachers: {admin.GetAllTeachers().Count} ";
+            teachersDataGridView.Columns[teachersDataGridView.Columns.Count - 1].Visible = false;
+            teachersDataGridView.Columns[teachersDataGridView.Columns.Count - 2].Visible = false;
+
         }
         void ClearStudent()
         {
@@ -42,6 +46,8 @@ namespace VisualProgramming_Project
         {
             studentsDataGridView.DataSource = admin.GetAllStudents();
             studentLabel.Text = $"Students: {admin.GetAllStudents().Count} ";
+            studentsDataGridView.Columns[studentsDataGridView.Columns.Count - 1].Visible = false;
+            studentsDataGridView.Columns[studentsDataGridView.Columns.Count - 2].Visible = false;
         }
         void ClearCourse()
         {
@@ -49,19 +55,29 @@ namespace VisualProgramming_Project
             courseDescription.Clear();
             courseLevel.Clear();
         }
-        void LoadCourse()
+        void LoadCourses()
         {
             coursesDataGridView.DataSource = admin.GetAllCourses();
             coursesLabel.Text = $"Courses: {admin.GetAllCourses().Count} ";
+            coursesDataGridView.Columns[coursesDataGridView.Columns.Count - 1].Visible = false;
+            coursesDataGridView.Columns[coursesDataGridView.Columns.Count - 2].Visible = false;
+        }
+        void ClearExam()
+        {
+            examName.Clear();
+            examDescription.Clear();
+        }
+        void LoadExams()
+        {
+            examDataGridView.DataSource = admin.GetAllExams();
+            examsLabel.Text = $"Courses: {admin.GetAllExams().Count} ";
         }
         private void AdminDashboard_Load(object sender, EventArgs e)
         {
-            studentsDataGridView.DataSource = admin.GetAllStudents();
-            studentLabel.Text = $"Students: {admin.GetAllStudents().Count} ";
-            teachersDataGridView.DataSource = admin.GetAllTeachers();
-            teacherLabel.Text = $"Teachers: {admin.GetAllTeachers().Count} ";
-            coursesDataGridView.DataSource = admin.GetAllCourses();
-            coursesLabel.Text = $"Courses: {admin.GetAllCourses().Count} ";
+            LoadCourses();
+            LoadStudents();
+            LoadTeachers();
+            LoadExams();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -76,7 +92,7 @@ namespace VisualProgramming_Project
             };
 
             admin.CreateTeacher(teacher);
-            LoadTeacher();
+            LoadTeachers();
             ClearTeacher();
 
         }
@@ -84,7 +100,7 @@ namespace VisualProgramming_Project
         {
             int id = Convert.ToInt32(teachersDataGridView.CurrentCell.Value);
             admin.DeleteTeacher(id);
-            LoadTeacher();
+            LoadTeachers();
         }
         private void addTeacher_Click(object sender, EventArgs e)
         {
@@ -98,7 +114,7 @@ namespace VisualProgramming_Project
             };
 
             admin.UpdateTeacher(teacher);
-            LoadTeacher();
+            LoadTeachers();
             ClearTeacher();
         }
 
@@ -106,7 +122,7 @@ namespace VisualProgramming_Project
         {
             int id = Convert.ToInt32(teachersDataGridView.CurrentCell.Value);
             admin.DeleteTeacher(id);
-            LoadTeacher();
+            LoadTeachers();
         }
 
         private void addTeacher_Click_1(object sender, EventArgs e)
@@ -115,12 +131,12 @@ namespace VisualProgramming_Project
             {
                 Name = teacherName.Text,
                 collage = teacherCollage.Text,
-                Email = teacherEmail.Text,
+                Email = "t" + teacherEmail.Text + tprojectcom.Text,
                 Password = teacherPassword.Text,
             };
 
             admin.CreateTeacher(teacher);
-            LoadTeacher();
+            LoadTeachers();
             ClearTeacher();
         }
 
@@ -145,7 +161,7 @@ namespace VisualProgramming_Project
                 teacher.collage = teacherCollage.Text;
             }
             admin.UpdateTeacher(teacher);
-            LoadTeacher();
+            LoadTeachers();
             ClearTeacher();
         }
 
@@ -155,7 +171,7 @@ namespace VisualProgramming_Project
             {
                 Name = studentName.Text,
                 Specialization = studentSpecialization.Text,
-                Email = studentEmail.Text,
+                Email = "s" + studentEmail.Text + sprojectcom.Text,
                 Password = studentPassword.Text,
             };
 
@@ -207,11 +223,11 @@ namespace VisualProgramming_Project
                 Description = courseDescription.Text,
                 Level = int.Parse(courseLevel.Text),
                 Teacher = teacher,
+                TeacherId = teacher.Id,
             };
 
             admin.CreateCourse(course);
-            LoadTeacher();
-            LoadCourse();
+            LoadCourses();
             ClearCourse();
         }
 
@@ -233,20 +249,7 @@ namespace VisualProgramming_Project
             }
 
             admin.UpdateCourse(course);
-            LoadCourse();
-            ClearCourse();
-        }
-
-        private void changeTeacherOfCourse_Click(object sender, EventArgs e)
-        {
-            int courseid = Convert.ToInt32(coursesDataGridView.CurrentCell.Value);
-            Course course = admin.GetCourse(courseid);
-            int teacherid = Convert.ToInt32(teachersDataGridView.CurrentCell.Value);
-            Teacher teacher = admin.GetTeacher(teacherid);
-
-            course.Teacher = teacher;
-            admin.UpdateCourse(course);
-            LoadCourse();
+            LoadCourses();
             ClearCourse();
         }
 
@@ -254,7 +257,7 @@ namespace VisualProgramming_Project
         {
             int id = Convert.ToInt32(coursesDataGridView.CurrentCell.Value);
             admin.DeleteCourse(id);
-            LoadCourse();
+            LoadCourses();
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -273,6 +276,101 @@ namespace VisualProgramming_Project
             {
                 MessageBox.Show("Teacher has not assagin in courses");
             }
+        }
+
+        private void addExam_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(coursesDataGridView.CurrentCell.Value);
+            Course course = admin.GetCourse(id);
+
+            Exam exam = new Exam()
+            {
+                Name = examName.Text,
+                Description = examDescription.Text,
+                Date = DateTime.Parse(examDate.Text),
+                StartTime = DateTime.Parse(examDate.Text + " " + examStartTime.Text),
+                EndTime = DateTime.Parse(examDate.Text + " " + examEndTime.Text),
+                Course = course,
+            };
+
+            admin.CreateExam(exam);
+            LoadExams();
+            ClearExam();
+        }
+
+        private void showStudentCourses_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(studentsDataGridView.CurrentCell.Value);
+            Student student = admin.GetStudent(id);
+            coursesStudentListView.Items.Clear();
+
+            if (student.Courses != null)
+            {
+                foreach (var t in student.Courses)
+                {
+                    coursesTeacherListView.Items.Add(t.Course.Name);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Student has not assagin in courses");
+            }
+        }
+
+        private void showExamsCourse_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(coursesDataGridView.CurrentCell.Value);
+
+            Course course = admin.GetCourse(id);
+            courseExamsListView.Items.Clear();
+
+            if (course.Exams != null)
+            {
+                foreach (var t in course.Exams)
+                {
+                    courseExamsListView.Items.Add(t.Name);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Student has not assagin in courses");
+            }
+        }
+
+        private void removeExam_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(examDataGridView.CurrentCell.Value);
+            admin.DeleteExam(id);
+            LoadExams();
+        }
+
+        private void updateExam_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(examDataGridView.CurrentCell.Value);
+            Exam exam = admin.GetExam(id);
+            if (examName.Text != "")
+            {
+                exam.Name = examName.Text;
+            }
+            if (examDescription.Text != "")
+            {
+                exam.Description = examDescription.Text;
+            }
+            if (examDate.Text != "")
+            {
+                exam.Date = DateTime.Parse(examDate.Text);
+            }
+            if (examStartTime.Text != "")
+            {
+                exam.StartTime = DateTime.Parse(examDate.Text + " " + examStartTime.Text);
+            }
+            if (examEndTime.Text != "")
+            {
+                exam.EndTime = DateTime.Parse(examDate.Text + " " + examEndTime.Text);
+            }
+            admin.UpdateExam(exam);
+            LoadExams();
+            ClearExam();
         }
     }
 }
