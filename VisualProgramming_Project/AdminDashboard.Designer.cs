@@ -30,6 +30,7 @@
         {
             tabControl1 = new TabControl();
             tabPage2 = new TabPage();
+            logout = new Button();
             panel3 = new Panel();
             removeTeacher = new Button();
             panel2 = new Panel();
@@ -87,6 +88,7 @@
             coursesLabel = new Label();
             coursesDataGridView = new DataGridView();
             tabPage3 = new TabPage();
+            button2 = new Button();
             panel8 = new Panel();
             removeExam = new Button();
             panel6 = new Panel();
@@ -142,6 +144,7 @@
             // tabPage2
             // 
             tabPage2.BorderStyle = BorderStyle.Fixed3D;
+            tabPage2.Controls.Add(logout);
             tabPage2.Controls.Add(panel3);
             tabPage2.Controls.Add(panel2);
             tabPage2.Controls.Add(panel1);
@@ -154,6 +157,16 @@
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Teacher";
             tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // logout
+            // 
+            logout.Location = new Point(476, 22);
+            logout.Name = "logout";
+            logout.Size = new Size(75, 30);
+            logout.TabIndex = 22;
+            logout.Text = "Logout";
+            logout.UseVisualStyleBackColor = true;
+            logout.Click += logout_Click;
             // 
             // panel3
             // 
@@ -719,6 +732,7 @@
             // tabPage3
             // 
             tabPage3.BorderStyle = BorderStyle.Fixed3D;
+            tabPage3.Controls.Add(button2);
             tabPage3.Controls.Add(panel8);
             tabPage3.Controls.Add(panel6);
             tabPage3.Controls.Add(examsLabel);
@@ -730,6 +744,15 @@
             tabPage3.TabIndex = 4;
             tabPage3.Text = "Exam";
             tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(301, 318);
+            button2.Name = "button2";
+            button2.Size = new Size(174, 137);
+            button2.TabIndex = 19;
+            button2.Text = "button2";
+            button2.UseVisualStyleBackColor = true;
             // 
             // panel8
             // 
@@ -1021,5 +1044,7 @@
         private Label label9;
         private Label label15;
         private Label label16;
+        private Button button2;
+        private Button logout;
     }
 }

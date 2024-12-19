@@ -1,4 +1,5 @@
-﻿using Project.BLL.repo;
+﻿using Microsoft.VisualBasic.Logging;
+using Project.BLL.repo;
 using Project.DAL.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -215,15 +216,13 @@ namespace VisualProgramming_Project
         private void addCourse_Click(object sender, EventArgs e)
         {
             int id = Convert.ToInt32(teachersDataGridView.CurrentCell.Value);
-            Teacher teacher = admin.GetTeacher(id);
 
             Course course = new Course()
             {
                 Name = courseName.Text,
                 Description = courseDescription.Text,
                 Level = int.Parse(courseLevel.Text),
-                Teacher = teacher,
-                TeacherId = teacher.Id,
+                TeacherId = id,
             };
 
             admin.CreateCourse(course);
@@ -319,6 +318,7 @@ namespace VisualProgramming_Project
 
         private void showExamsCourse_Click(object sender, EventArgs e)
         {
+
             int id = Convert.ToInt32(coursesDataGridView.CurrentCell.Value);
 
             Course course = admin.GetCourse(id);
@@ -371,6 +371,12 @@ namespace VisualProgramming_Project
             admin.UpdateExam(exam);
             LoadExams();
             ClearExam();
+        }
+
+        private void logout_Click(object sender, EventArgs e)
+        {
+            Application.OpenForms["Form1"]?.Show();
+            this.Close();
         }
     }
 }
