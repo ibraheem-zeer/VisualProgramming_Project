@@ -61,7 +61,6 @@
             label1.Size = new Size(177, 45);
             label1.TabIndex = 2;
             label1.Text = "Login Page";
-            label1.Click += label1_Click;
             // 
             // button1
             // 

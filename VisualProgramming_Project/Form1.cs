@@ -1,4 +1,5 @@
 using Project.BLL.repo;
+using Project.DAL.Data.Models;
 
 namespace VisualProgramming_Project
 {
@@ -15,7 +16,10 @@ namespace VisualProgramming_Project
         {
 
         }
-
+        void clearText() { 
+            textBox1.Clear();
+            textBox2.Clear();
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             if (textBox1.Text == "admin" && textBox2.Text == "admin")
@@ -23,6 +27,7 @@ namespace VisualProgramming_Project
                 AdminDashboard admin = new AdminDashboard();
                 admin.Show();
                 this.Hide();
+                clearText();
             }
             else if (textBox1.Text[0] == 't')
             {

@@ -12,7 +12,7 @@ namespace Project.DAL.Data.Models
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
         public DateTime Date { get; set; }
-        public DateTime StartTime { get; set; }
+        public DateTime StartTime { get; set; } //TimeSpan
         public DateTime EndTime { get; set; }
         public int CourseId { get; set; }
 
