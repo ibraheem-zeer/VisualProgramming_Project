@@ -9,10 +9,11 @@ namespace Project.BLL.Interfaces
 {
     internal interface ITeacher
     {
-        void Login(string Email, string Password);
+        string Login(string Email, string Password);
+        Teacher GetTeacherByEmail(string email);
         ICollection<Exam> ViewExams(Exam exam);
         void CompleteExam(int id);
-        ICollection<Course> ViewAssignedCourse();
+        ICollection<Course> ViewAssignedCourse(string email);
         int ViewResultOfExam(int id);
     }
 }
