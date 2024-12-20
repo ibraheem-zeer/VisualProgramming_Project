@@ -1,4 +1,5 @@
 ﻿using Project.BLL.repo;
+using Project.DAL.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,6 +31,55 @@ namespace VisualProgramming_Project
             {
                 TeacherCoursesList.Items.Add(course.Name, course.Description);
             }
+            LoadAssignCourses();
+        }
+
+        private void TeacherCoursesList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        void LoadAssignCourses()
+        {
+            yourCoursesDataGridView.DataSource = teacherRepo.ViewAssignedCourse(TeacherEmail)
+                .Select(x => new
+                {
+                    Id = x.Id,
+                    CourseName = x.Name,
+                }).ToList();
+            yourCoursesDataGridView.Columns[0].Visible = false;
+        }
+        void LoadCourseExam(List<Exam> exams)
+        {
+            examsDataGridView.DataSource = exams;
+            examsDataGridView.Columns[0].Visible = false;
+            examsDataGridView.Columns[examsDataGridView.Columns.Count - 1].Visible = false;
+            examsDataGridView.Columns[examsDataGridView.Columns.Count - 2].Visible = false;
+            examsDataGridView.Columns[examsDataGridView.Columns.Count - 3].Visible = false;
+            examsDataGridView.Columns[examsDataGridView.Columns.Count - 4].Visible = false;
+        }
+
+        private void yourCoursesDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int id = Convert.ToInt32(yourCoursesDataGridView.CurrentRow.Cells["Id"].Value);
+
+            List<Exam> exams = teacherRepo.ViewExams(id).ToList();
+            if (exams == null || !exams.Any())
+            {
+                examsDataGridView.DataSource = null;
+                MessageBox.Show("No exams found for the selected course.");
+                return;
+            }
+
+            LoadCourseExam(exams);
+        }
+
+        private void CompleteExam_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(examsDataGridView.CurrentRow.Cells["Id"].Value);
+            QuestionForm questionForm = new QuestionForm();
+            questionForm.examId = id;
+            questionForm.ShowDialog();
         }
     }
 }

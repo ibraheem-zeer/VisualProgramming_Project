@@ -44,9 +44,9 @@ namespace Project.BLL.repo
             return null;
         }
 
-        public ICollection<Exam> ViewExams(Exam exam)
+        public ICollection<Exam> ViewExams(int id)
         {
-            throw new NotImplementedException();
+            return context.Exams.Where(x => x.CourseId == id).ToList();
         }
 
         public int ViewResultOfExam(int id)
