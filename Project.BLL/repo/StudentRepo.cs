@@ -105,7 +105,15 @@ namespace Project.BLL.repo
         }
         public string SeeResult(int id)
         {
-            throw new NotImplementedException();
+            var exam = context.Exams.Include(ex => ex.Students).FirstOrDefault(x=> x.Id == id);
+            if (exam is null) return "-1";
+
+            var res = exam.Students.Select(x => x.Result);
+            foreach (var item in res)
+            {
+                return item.ToString();
+            }
+            return "-1";
         }
 
 

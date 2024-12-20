@@ -58,7 +58,7 @@ namespace VisualProgramming_Project
         {
             int id = Convert.ToInt32(examsDataGridView.CurrentRow.Cells["Id"].Value);
             var questions = studentRepo.DoExam(id);
-            if(questions is null)
+            if (questions is null)
             {
                 MessageBox.Show("Don't Cheat man!");
             }
@@ -84,7 +84,7 @@ namespace VisualProgramming_Project
             int id = Convert.ToInt32(coursesDataGridView.CurrentRow.Cells["Id"].Value);
             Course course = studentRepo.GetCourse(id);
 
-            if(course.Key.ToString() == CouresKey.Text)
+            if (course.Key.ToString() == CouresKey.Text)
             {
                 StudentCourse? existingCourse = thisStudent.Courses.FirstOrDefault(c => c.CourseId == id);
 
@@ -106,7 +106,8 @@ namespace VisualProgramming_Project
                 {
                     MessageBox.Show("Student has assagin in this course");
                 }
-            }else
+            }
+            else
             {
                 MessageBox.Show("Hmmmm!!! it seems you want to steal this course , Go Away...");
             }
@@ -154,6 +155,12 @@ namespace VisualProgramming_Project
         {
             Application.OpenForms["Form1"]?.Show();
             this.Close();
+        }
+
+        private void seeResult_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(examsDataGridView.CurrentRow.Cells["Id"].Value);
+            MessageBox.Show(studentRepo.SeeResult(id));
         }
     }
 }

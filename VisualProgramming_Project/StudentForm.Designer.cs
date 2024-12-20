@@ -39,13 +39,13 @@
             yourCoursesDataGridView = new DataGridView();
             label1 = new Label();
             tabPage2 = new TabPage();
+            CouresKey = new TextBox();
             logout = new Button();
             panel3 = new Panel();
             rollCourse = new Button();
             unRoll = new Button();
             label2 = new Label();
             coursesDataGridView = new DataGridView();
-            CouresKey = new TextBox();
             tabControl1.SuspendLayout();
             Profile.SuspendLayout();
             panel2.SuspendLayout();
@@ -94,6 +94,7 @@
             seeResult.TabIndex = 7;
             seeResult.Text = "See Result";
             seeResult.UseVisualStyleBackColor = true;
+            seeResult.Click += seeResult_Click;
             // 
             // startExam
             // 
@@ -188,6 +189,13 @@
             tabPage2.Text = "Roll Courses";
             tabPage2.UseVisualStyleBackColor = true;
             // 
+            // CouresKey
+            // 
+            CouresKey.Location = new Point(9, 377);
+            CouresKey.Name = "CouresKey";
+            CouresKey.Size = new Size(150, 31);
+            CouresKey.TabIndex = 25;
+            // 
             // logout
             // 
             logout.Location = new Point(1016, 59);
@@ -252,13 +260,6 @@
             coursesDataGridView.RowHeadersWidth = 62;
             coursesDataGridView.Size = new Size(1114, 250);
             coursesDataGridView.TabIndex = 0;
-            // 
-            // CouresKey
-            // 
-            CouresKey.Location = new Point(9, 377);
-            CouresKey.Name = "CouresKey";
-            CouresKey.Size = new Size(150, 31);
-            CouresKey.TabIndex = 25;
             // 
             // StudentForm
             // 
