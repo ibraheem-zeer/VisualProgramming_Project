@@ -41,7 +41,8 @@ namespace VisualProgramming_Project
             //yourCoursesDataGridView.Columns[yourCoursesDataGridView.Columns.Count -1 ].Visible = false;
             //yourCoursesDataGridView.Columns[yourCoursesDataGridView.Columns.Count -2 ].Visible = false;
             //yourCoursesDataGridView.Columns[yourCoursesDataGridView.Columns.Count -3 ].Visible = false;
-        } void LoadCourseExam(List<Exam> exams)  {
+        }
+        void LoadCourseExam(List<Exam> exams)  {
             examsDataGridView.DataSource = exams;
             examsDataGridView.Columns[0].Visible = false;
             examsDataGridView.Columns[examsDataGridView.Columns.Count -1 ].Visible = false;
