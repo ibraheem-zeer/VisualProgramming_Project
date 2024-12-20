@@ -81,5 +81,16 @@ namespace VisualProgramming_Project
             questionForm.examId = id;
             questionForm.ShowDialog();
         }
+
+        private void logout_Click(object sender, EventArgs e)
+        {
+            Application.OpenForms["Form1"]?.Show();
+            this.Close();
+        }
+
+        private void seeResult_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

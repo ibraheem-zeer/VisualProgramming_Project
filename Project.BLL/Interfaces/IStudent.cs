@@ -18,7 +18,7 @@ namespace Project.BLL.Interfaces
         string UpdateStudent(Student student);
         Student Login(string Email, string Password);
         string Enroll(StudentCourse studentcourse);
-        string DoExam(int id);
+        ICollection<Question> DoExam(int id);
         string SeeResult(int id);
     }
 }

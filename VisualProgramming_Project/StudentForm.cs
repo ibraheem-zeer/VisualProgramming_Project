@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using VisualProgramming_Project.Helpers;
 
 namespace VisualProgramming_Project
 {
@@ -27,58 +28,87 @@ namespace VisualProgramming_Project
         {
             coursesDataGridView.DataSource = studentRepo.GetAllCourses();
             coursesDataGridView.Columns[0].Visible = false;
+            coursesDataGridView.Columns[1].Visible = false;
             LoadAssignCourses();
         }
-        void LoadAssignCourses() {
+        void LoadAssignCourses()
+        {
             yourCoursesDataGridView.DataSource = studentRepo.GetAllAssignCourses(thisStudent.Id)
                 .Select(x => new
                 {
                     Id = x.Id,
                     CourseName = x.Name,
                     TeacherName = x.Teacher.Name
-                }).ToList(); 
+                }).ToList();
             yourCoursesDataGridView.Columns[0].Visible = false;
             //yourCoursesDataGridView.Columns[yourCoursesDataGridView.Columns.Count -1 ].Visible = false;
             //yourCoursesDataGridView.Columns[yourCoursesDataGridView.Columns.Count -2 ].Visible = false;
             //yourCoursesDataGridView.Columns[yourCoursesDataGridView.Columns.Count -3 ].Visible = false;
         }
-        void LoadCourseExam(List<Exam> exams)  {
+        void LoadCourseExam(List<Exam> exams)
+        {
             examsDataGridView.DataSource = exams;
             examsDataGridView.Columns[0].Visible = false;
-            examsDataGridView.Columns[examsDataGridView.Columns.Count -1 ].Visible = false;
-            examsDataGridView.Columns[examsDataGridView.Columns.Count -2 ].Visible = false;
-            examsDataGridView.Columns[examsDataGridView.Columns.Count -3 ].Visible = false;
-            examsDataGridView.Columns[examsDataGridView.Columns.Count -4 ].Visible = false;
+            examsDataGridView.Columns[examsDataGridView.Columns.Count - 1].Visible = false;
+            examsDataGridView.Columns[examsDataGridView.Columns.Count - 2].Visible = false;
+            examsDataGridView.Columns[examsDataGridView.Columns.Count - 3].Visible = false;
+            examsDataGridView.Columns[examsDataGridView.Columns.Count - 4].Visible = false;
         }
         private void startExam_Click(object sender, EventArgs e)
         {
-
+            int id = Convert.ToInt32(examsDataGridView.CurrentRow.Cells["Id"].Value);
+            var questions = studentRepo.DoExam(id);
+            if(questions is null)
+            {
+                MessageBox.Show("Don't Cheat man!");
+            }
+            else
+            {
+                var studentExam = new StudentExam()
+                {
+                    StudentId = thisStudent.Id,
+                    ExamId = id,
+                    Result = GHelpers.result
+                };
+                AnswerQuestionsForm answerQuestionsForm;
+                foreach (var question in questions)
+                {
+                    answerQuestionsForm = new AnswerQuestionsForm(question);
+                    answerQuestionsForm.ShowDialog();
+                }
+            }
         }
 
         private void rollCourse_Click(object sender, EventArgs e)
         {
             int id = Convert.ToInt32(coursesDataGridView.CurrentRow.Cells["Id"].Value);
-
             Course course = studentRepo.GetCourse(id);
-            StudentCourse? existingCourse = thisStudent.Courses.FirstOrDefault(c => c.CourseId == id);
 
-            if (existingCourse == null)
+            if(course.Key.ToString() == CouresKey.Text)
             {
+                StudentCourse? existingCourse = thisStudent.Courses.FirstOrDefault(c => c.CourseId == id);
 
-                StudentCourse studentCourse = new StudentCourse()
+                if (existingCourse == null)
                 {
-                    CourseId = course.Id,
-                    Course = course,
-                };
-                thisStudent.Courses.Add(studentCourse);
-                studentRepo.UpdateStudent(thisStudent);
 
-                LoadAssignCourses();
+                    StudentCourse studentCourse = new StudentCourse()
+                    {
+                        CourseId = course.Id,
+                        Course = course,
+                    };
+                    thisStudent.Courses.Add(studentCourse);
+                    studentRepo.UpdateStudent(thisStudent);
 
-            }
-            else
+                    LoadAssignCourses();
+
+                }
+                else
+                {
+                    MessageBox.Show("Student has assagin in this course");
+                }
+            }else
             {
-                MessageBox.Show("Student has assagin in this course");
+                MessageBox.Show("Hmmmm!!! it seems you want to steal this course , Go Away...");
             }
         }
 
@@ -105,7 +135,7 @@ namespace VisualProgramming_Project
 
             Course course = studentRepo.GetCourse(id);
             List<StudentCourse> courses = studentRepo.GetAllStudentCourses(thisStudent.Id).ToList();
-            StudentCourse existingCourse = courses.FirstOrDefault(e => e.StudentId==thisStudent.Id);
+            StudentCourse existingCourse = courses.FirstOrDefault(e => e.StudentId == thisStudent.Id);
 
             if (existingCourse != null)
             {
@@ -118,6 +148,12 @@ namespace VisualProgramming_Project
             {
                 MessageBox.Show("Student removed form this course");
             }
+        }
+
+        private void logout_Click(object sender, EventArgs e)
+        {
+            Application.OpenForms["Form1"]?.Show();
+            this.Close();
         }
     }
 }

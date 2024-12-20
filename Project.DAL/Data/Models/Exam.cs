@@ -11,9 +11,9 @@ namespace Project.DAL.Data.Models
         public int Id { get; set; }
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
-        public DateTime Date { get; set; }
-        public DateTime StartTime { get; set; } //TimeSpan
-        public DateTime EndTime { get; set; }
+        public DateTime Date { get; set; } 
+        public TimeSpan StartTime { get; set; }
+        public TimeSpan EndTime { get; set; }
         public int CourseId { get; set; }
 
         public Course Course { get; set; } = null!;

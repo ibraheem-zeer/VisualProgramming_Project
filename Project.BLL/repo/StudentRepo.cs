@@ -14,9 +14,21 @@ namespace Project.BLL.repo
     {
         AppDbContext context = new AppDbContext();
 
-        public string DoExam(int id)
+        public ICollection<Question> DoExam(int id)
         {
-            throw new NotImplementedException();
+            var exam = context.Exams.Include(q => q.Questions).First(e=> e.Id == id);
+            if (exam == null) return null;
+
+
+            DateTime currentDateTime = DateTime.Now;
+            DateTime examStartDateTime = exam.Date.Add(exam.StartTime);
+            DateTime examEndDateTime = exam.Date.Add(exam.EndTime);
+
+            if (currentDateTime.Date == exam.Date && currentDateTime >= examStartDateTime && currentDateTime <= examEndDateTime)
+            {
+                return exam.Questions;
+            }
+            return null;
         }
 
         public string Enroll(StudentCourse studentcourse)

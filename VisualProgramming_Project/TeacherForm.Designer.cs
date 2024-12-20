@@ -32,6 +32,7 @@
             Courses = new TabPage();
             TeacherCoursesList = new ListView();
             Exams = new TabPage();
+            logout = new Button();
             seeResult = new Button();
             CompleteExam = new Button();
             panel2 = new Panel();
@@ -93,6 +94,17 @@
             Exams.Text = "Exams";
             Exams.UseVisualStyleBackColor = true;
             // 
+            // logout
+            // 
+            logout.Location = new Point(733, 21);
+            logout.Margin = new Padding(4, 5, 4, 5);
+            logout.Name = "logout";
+            logout.Size = new Size(97, 34);
+            logout.TabIndex = 25;
+            logout.Text = "Logout";
+            logout.UseVisualStyleBackColor = true;
+            logout.Click += logout_Click;
+            // 
             // seeResult
             // 
             seeResult.Location = new Point(1008, 405);
@@ -117,6 +129,7 @@
             // panel2
             // 
             panel2.BorderStyle = BorderStyle.FixedSingle;
+            panel2.Controls.Add(logout);
             panel2.Controls.Add(label3);
             panel2.Controls.Add(examsDataGridView);
             panel2.Location = new Point(279, 8);
@@ -214,5 +227,6 @@
         private Panel panel1;
         private DataGridView yourCoursesDataGridView;
         private Label label1;
+        private Button logout;
     }
 }

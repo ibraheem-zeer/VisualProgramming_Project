@@ -60,8 +60,8 @@ namespace VisualProgramming_Project
         {
             coursesDataGridView.DataSource = admin.GetAllCourses();
             coursesLabel.Text = $"Courses: {admin.GetAllCourses().Count} ";
-            coursesDataGridView.Columns[coursesDataGridView.Columns.Count - 1].Visible = false;
-            coursesDataGridView.Columns[coursesDataGridView.Columns.Count - 2].Visible = false;
+            //coursesDataGridView.Columns[coursesDataGridView.Columns.Count - 1].Visible = false;
+            //coursesDataGridView.Columns[coursesDataGridView.Columns.Count - 2].Visible = false;
         }
         void ClearExam()
         {
@@ -286,9 +286,9 @@ namespace VisualProgramming_Project
             {
                 Name = examName.Text,
                 Description = examDescription.Text,
-                Date = DateTime.Parse(examDate.Text),
-                StartTime = DateTime.Parse(examDate.Text + " " + examStartTime.Text),
-                EndTime = DateTime.Parse(examDate.Text + " " + examEndTime.Text),
+                Date = examDate.Value.Date,
+                StartTime = examStartTime.Value.TimeOfDay,
+                EndTime = examEndTime.Value.TimeOfDay,
                 Course = course,
             };
 
@@ -362,11 +362,11 @@ namespace VisualProgramming_Project
             }
             if (examStartTime.Text != "")
             {
-                exam.StartTime = DateTime.Parse(examDate.Text + " " + examStartTime.Text);
+                exam.StartTime = TimeSpan.Parse(examDate.Text + " " + examStartTime.Text);
             }
             if (examEndTime.Text != "")
             {
-                exam.EndTime = DateTime.Parse(examDate.Text + " " + examEndTime.Text);
+                exam.EndTime = TimeSpan.Parse(examDate.Text + " " + examEndTime.Text);
             }
             admin.UpdateExam(exam);
             LoadExams();

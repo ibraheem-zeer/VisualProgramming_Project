@@ -102,5 +102,11 @@ namespace VisualProgramming_Project
             LoadQuestion();
             Clear();
         }
+
+        private void logout_Click(object sender, EventArgs e)
+        {
+            Application.OpenForms["Form1"]?.Show();
+            this.Close();
+        }
     }
 }
