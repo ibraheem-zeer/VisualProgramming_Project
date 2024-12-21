@@ -1,4 +1,5 @@
-﻿using Project.BLL.Interfaces;
+﻿using Azure.Core;
+using Project.BLL.Interfaces;
 using Project.DAL.Data;
 using Project.DAL.Data.Models;
 using System;
@@ -44,13 +45,24 @@ namespace Project.BLL.repo
 
         public ICollection<Question> GetAllQuestions(int id) => context.Questions.Where(x => x.ExamId == id).ToList();
 
+        public Question getQuestion(int id)
+        {
+            return context.Questions.Find(id);
+        }
+
         public string UpdateQuestion(Question question)
         {
-            var findQuestion = context.Questions.Find(question.Id);
-            if (findQuestion == null) return "there is no Question";
-            context.Questions.Update(question);
-            context.SaveChanges();
-            return "Updated Successfully";
+            try { 
+                var findQuestion = context.Questions.Find(question.Id);
+                if (findQuestion == null) return "there is no Question";
+                context.Questions.Update(question);
+                context.SaveChanges();
+                return "Updated Successfully";
+            }
+            catch
+            {
+                return "Internal Server Error!";
+            }
         }
     }
 }

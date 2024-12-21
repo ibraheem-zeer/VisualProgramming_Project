@@ -12,6 +12,7 @@ namespace Project.BLL.Interfaces
         string AddQuestion(Question question);
         string UpdateQuestion(Question question);
         string DeleteQuestion(int id);
+        Question getQuestion(int id);
 
         ICollection<Question> GetAllQuestions(int id);
     }

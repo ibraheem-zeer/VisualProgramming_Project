@@ -42,9 +42,9 @@ namespace Project.BLL.repo
 
         public ICollection<Exam> ViewExams(int id) => context.Exams.Where(x => x.CourseId == id).ToList();
 
-        public int ViewResultOfExam(int id)
+        public ICollection<StudentExam> ViewResultOfExam(int id)
         {
-            throw new NotImplementedException();
+            return context.StudentExams.Include(s=>s.Student).Where(x => x.ExamId == id).ToList();
         }
     }
 }
