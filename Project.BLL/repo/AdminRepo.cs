@@ -197,9 +197,26 @@ namespace Project.BLL.repo
             }
         }
 
+        public int EnrolledCount(int id)
+        {
+            var course = context.Courses.Include(x => x.Students).Where(c => c.Id == id).First();
+            return course.Students.Count();
+        }
+
         public ICollection<Course> GetAllCourses() => context.Courses.ToList();
 
         public ICollection<Exam> GetAllExams() => context.Exams.ToList();
+
+        public ICollection<Exam> GetAllExams(int id)
+        {
+            return context.Teachers
+            .Include(t => t.Courses)
+            .ThenInclude(c => c.Exams)
+            .FirstOrDefault(t => t.Id == id)?
+            .Courses
+            .SelectMany(c => c.Exams)
+            .ToList();
+        }
 
         public ICollection<Student> GetAllStudents() => context.Students.ToList();
 
@@ -231,6 +248,18 @@ namespace Project.BLL.repo
             Teacher teacher = context.Teachers.Find(id);
             if (teacher == null) return null;
             return teacher;
+        }
+
+        public int MaxResult(int id)
+        {
+            var maxResult = context.StudentExams
+            .Include(x => x.Exam)
+            .Where(e => e.ExamId == id)
+            .OrderByDescending(p => p.Result)
+            .Select(p => p.Result)
+            .FirstOrDefault();
+
+            return Convert.ToInt32(maxResult);
         }
 
         public string UpdateCourse(Course course)

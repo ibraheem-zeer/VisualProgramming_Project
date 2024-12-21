@@ -13,11 +13,14 @@ namespace Project.BLL.Interfaces
         ICollection<Teacher> GetAllTeachers();
         ICollection<Course> GetAllCourses();
         ICollection<Exam> GetAllExams();
+        ICollection<Exam> GetAllExams(int id);
 
         Student GetStudent(int id);
         Teacher GetTeacher(int id);
         Course GetCourse(int id);
         Exam GetExam(int id);
+        int EnrolledCount(int id);
+        int MaxResult(int id);
 
         string CreateStudent(Student student);
         string UpdateStudent(Student student);

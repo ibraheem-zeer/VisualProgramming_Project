@@ -76,6 +76,7 @@ namespace VisualProgramming_Project
             LoadStudents();
             LoadTeachers();
             LoadExams();
+            loadDataForQueries();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -345,20 +346,51 @@ namespace VisualProgramming_Project
 
 
         //   Queries !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        void loadDataForQueries() { 
-            courseComboBox.Items.Clear();
-            studentComboBox.Items.Clear();
-            teacherComboBox.Items.Clear();
-            examComboBox.Items.Clear();
-
-            courseComboBox.Items.Add(admin.GetAllCourses());
-        
+        void loadDataForQueries()
+        {
+            var courses = admin.GetAllCourses();
+            var exams = admin.GetAllExams();
+            var students = admin.GetAllStudents();
+            var teachers = admin.GetAllTeachers();
+            foreach (var course in courses)
+                courseComboBox.Items.Add(course.Id);
+            foreach (var exam in exams)
+                examComboBox.Items.Add(exam.Id);
+            foreach (var student in students)
+                studentComboBox.Items.Add(student.Id);
+            foreach (var teacher in teachers)
+                teacherComboBox.Items.Add(teacher.Id);
         }
         private void button2_Click_1(object sender, EventArgs e)
         {
-
+            var id = int.Parse(courseComboBox.SelectedItem.ToString());
+            MessageBox.Show(admin.EnrolledCount(id).ToString());
         }
 
-       
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var id = int.Parse(examComboBox.SelectedItem.ToString());
+            MessageBox.Show(admin.MaxResult(id).ToString() + "Teeeeeeeeeesttttttttt");
+        }
+
+        private void TeacherBtn_Click(object sender, EventArgs e)
+        {
+            var id = int.Parse(teacherComboBox.SelectedItem.ToString());
+            var exams = admin.GetAllExams(id);
+
+            TeacherListView.Items.Clear();
+
+            if (exams != null && exams.Any())
+            {
+                foreach (var exam in exams)
+                {
+                    TeacherListView.Items.Add(exam.Name);
+                }
+            }
+            else
+            {
+                MessageBox.Show("No exams found for the selected teacher.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
     }
 }
