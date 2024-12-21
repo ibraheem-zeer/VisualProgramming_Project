@@ -104,12 +104,12 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(237, 7);
+            label1.Location = new Point(13, 7);
             label1.Margin = new Padding(2, 0, 2, 0);
             label1.Name = "label1";
-            label1.Size = new Size(41, 15);
+            label1.Size = new Size(77, 15);
             label1.TabIndex = 6;
-            label1.Text = "السؤال";
+            label1.Text = "The Question";
             // 
             // label2
             // 
@@ -168,29 +168,29 @@
             label3.Location = new Point(209, 220);
             label3.Margin = new Padding(2, 0, 2, 0);
             label3.Name = "label3";
-            label3.Size = new Size(70, 15);
+            label3.Size = new Size(47, 15);
             label3.TabIndex = 24;
-            label3.Text = "الاجابة الاولى";
+            label3.Text = "Answor";
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(209, 175);
+            label4.Location = new Point(14, 175);
             label4.Margin = new Padding(2, 0, 2, 0);
             label4.Name = "label4";
-            label4.Size = new Size(70, 15);
+            label4.Size = new Size(52, 15);
             label4.TabIndex = 25;
-            label4.Text = "الاجابة الاولى";
+            label4.Text = "Choise 4";
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(209, 133);
+            label5.Location = new Point(13, 133);
             label5.Margin = new Padding(2, 0, 2, 0);
             label5.Name = "label5";
-            label5.Size = new Size(70, 15);
+            label5.Size = new Size(52, 15);
             label5.TabIndex = 26;
-            label5.Text = "الاجابة الاولى";
+            label5.Text = "Choise 3";
             // 
             // label6
             // 

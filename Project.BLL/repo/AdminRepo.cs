@@ -221,7 +221,7 @@ namespace Project.BLL.repo
 
         public Student GetStudent(int id)
         {
-            Student student = context.Students.Find(id);
+            Student student = context.Students.Include(s=>s.Courses).ThenInclude(e=>e.Course).FirstOrDefault(s=>s.Id == id);
             if (student == null) return null;
             return student;
         }
@@ -308,17 +308,9 @@ namespace Project.BLL.repo
             }
         }
 
-        public string ViewResult(int id)
+        public ICollection<StudentExam> ViewResult(int id)
         {
-            var exam = context.Exams.Include(ex => ex.Students).FirstOrDefault(x => x.Id == id);
-            if (exam is null) return "-1";
-
-            var res = exam.Students.Select(x => x.Result);
-            foreach (var item in res)
-            {
-                return item.ToString();
-            }
-            return "-1";
+            return context.StudentExams.Include(s => s.Student).Where(x => x.ExamId == id).ToList();
         }
     }
 }

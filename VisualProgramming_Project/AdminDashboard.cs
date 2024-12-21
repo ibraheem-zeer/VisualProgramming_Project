@@ -266,9 +266,9 @@ namespace VisualProgramming_Project
             int id = Convert.ToInt32(studentsDataGridView.CurrentCell.Value);
             Student student = admin.GetStudent(id);
             coursesStudentListView.Items.Clear();
-            if (student.Courses != null)
+            if (student.Courses.Count() != 0)
                 foreach (var t in student.Courses)
-                    coursesTeacherListView.Items.Add(t.Course.Name);
+                    coursesStudentListView.Items.Add(t.Course.Name);
             else
                 MessageBox.Show("Student has not assagin in courses");
         }
@@ -319,5 +319,46 @@ namespace VisualProgramming_Project
             this.Close();
         }
 
+        private void ResultExam_Click(object sender, EventArgs e)
+        {
+            if (examDataGridView.CurrentRow == null)
+            {
+                MessageBox.Show("Select the Exam !!!!!!!!!");
+                return;
+            }
+            int id = Convert.ToInt32(examDataGridView.CurrentRow.Cells["Id"].Value);
+
+            var resultofexam = admin.ViewResult(id);
+            string n = "";
+            foreach (var exam in resultofexam)
+            {
+                n = n + $"Student Name {exam.Student.Name} The Result = $ {exam.Result} \n";
+
+            }
+            if (n == "")
+            {
+                n = "no one take the exam";
+            }
+            MessageBox.Show(n);
+        }
+
+
+
+        //   Queries !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        void loadDataForQueries() { 
+            courseComboBox.Items.Clear();
+            studentComboBox.Items.Clear();
+            teacherComboBox.Items.Clear();
+            examComboBox.Items.Clear();
+
+            courseComboBox.Items.Add(admin.GetAllCourses());
+        
+        }
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+       
     }
 }

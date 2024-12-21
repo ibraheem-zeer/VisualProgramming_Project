@@ -42,7 +42,6 @@ namespace VisualProgramming_Project
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var question = new Question()
             if (textBox1.Text.Equals("")
                 ||textBox2.Text.Equals("")
                 || textBox3.Text.Equals("")

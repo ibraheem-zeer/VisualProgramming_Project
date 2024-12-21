@@ -137,7 +137,7 @@ namespace Project.BLL.repo
                 return "I wish you success";
             }
             catch (Exception ex) {
-                return "somthing wrong";
+                return "Internal Server Error";
             }
         } 
     }
