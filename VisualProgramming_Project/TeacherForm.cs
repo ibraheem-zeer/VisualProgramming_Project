@@ -15,7 +15,6 @@ namespace VisualProgramming_Project
 {
     public partial class TeacherForm : Form
     {
-
         public string TeacherEmail { get; set; }
         TeacherRepo teacherRepo = new TeacherRepo();
         public TeacherForm()

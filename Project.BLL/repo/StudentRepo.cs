@@ -13,22 +13,26 @@ namespace Project.BLL.repo
     public class StudentRepo : IStudent
     {
         AppDbContext context = new AppDbContext();
-
         public ICollection<Question> DoExam(int id)
         {
-            var exam = context.Exams.Include(q => q.Questions).First(e=> e.Id == id);
-            if (exam == null) return null;
-
-
-            DateTime currentDateTime = DateTime.Now;
-            DateTime examStartDateTime = exam.Date.Add(exam.StartTime);
-            DateTime examEndDateTime = exam.Date.Add(exam.EndTime);
-
-            if (currentDateTime.Date == exam.Date && currentDateTime >= examStartDateTime && currentDateTime <= examEndDateTime)
+            try
             {
-                return exam.Questions;
+                var exam = context.Exams.Include(q => q.Questions).First(e=> e.Id == id);
+                if (exam == null) return null;
+                DateTime currentDateTime = DateTime.Now;
+                DateTime examStartDateTime = exam.Date.Add(exam.StartTime);
+                DateTime examEndDateTime = exam.Date.Add(exam.EndTime);
+
+                if (currentDateTime.Date == exam.Date && currentDateTime >= examStartDateTime && currentDateTime <= examEndDateTime)
+                {
+                    return exam.Questions;
+                }
+                return null;
             }
-            return null;
+            catch(Exception ex)
+            {
+                return null;
+            }
         }
 
         public string Enroll(StudentCourse studentcourse)
@@ -50,17 +54,12 @@ namespace Project.BLL.repo
             }
         }
 
-        public ICollection<Course> GetAllCourses()
-        {
-            return context.Courses.ToList();
-        }
+        public ICollection<Course> GetAllCourses() => context.Courses.ToList();
 
         public Course GetCourse(int id)
         {
             Course course = context.Courses.Find(id);
-            if (course == null)
-                return null;
-
+            if (course == null) return null;
             return course;
         }
 
@@ -68,16 +67,12 @@ namespace Project.BLL.repo
         {
             try
             {
-                Student student = context.Students
-                    .FirstOrDefault(s => s.Email == Email && s.Password == Password);
-
+                Student student = context.Students.FirstOrDefault(s => s.Email == Email && s.Password == Password);
                 if (student != null && student.Password == Password)
                 {
                     return student;
                 }
-                else
-                    return null;
-                
+                else return null;
             }
             catch (Exception e)
             {
@@ -94,9 +89,7 @@ namespace Project.BLL.repo
                     context.SaveChanges();
                     return "sucsses";
                 }
-                else
-                    return "Student Not Found";
-
+                else return "Student Not Found";
             }
             catch (Exception e)
             {
@@ -105,41 +98,35 @@ namespace Project.BLL.repo
         }
         public string SeeResult(int id)
         {
-            var exam = context.Exams.Include(ex => ex.Students).FirstOrDefault(x=> x.Id == id);
-            if (exam is null) return "-1";
 
-            var res = exam.Students.Select(x => x.Result);
-            foreach (var item in res)
+            try
             {
-                return item.ToString();
+                var exam = context.Exams.Include(ex => ex.Students).FirstOrDefault(x=> x.Id == id);
+                if (exam is null) return "-1";
+
+                var res = exam.Students.Select(x => x.Result);
+                foreach (var item in res) return item.ToString();
+                return "-1";
             }
-            return "-1";
+            catch
+            {
+                return "Internal Server Error";
+            }
         }
 
 
-        public ICollection<Exam> GetExams(int idCourse)
-        {
-            return context.Exams.Include(s=>s.Students).Where(x=>x.CourseId == idCourse).ToList();
-        }
+        public ICollection<Exam> GetExams(int idCourse) => context.Exams.Include(s=>s.Students).Where(x=>x.CourseId == idCourse).ToList();
 
-        public ICollection<Question> GetQuestion(int idExam)
-        {
-            return context.Questions.Where(x => x.ExamId == idExam).ToList();
-        }
+        public ICollection<Question> GetQuestion(int idExam) => context.Questions.Where(x => x.ExamId == idExam).ToList();
 
-        public ICollection<StudentCourse> GetAllStudentCourses(int id)
-        {
-            return context.StudentCourses.Where(c => c.StudentId == id).ToList();
-        }
+        public ICollection<StudentCourse> GetAllStudentCourses(int id) => context.StudentCourses.Where(c => c.StudentId == id).ToList();
 
-        public ICollection<Course> GetAllAssignCourses(int id)
-        {
-            return context.Courses
+        public ICollection<Course> GetAllAssignCourses(int id) => 
+            context.Courses
                 .Include(x => x.Students) 
                 .Include(x => x.Teacher)  
                 .Where(c => c.Students.Any(s => s.StudentId == id)) 
                 .ToList();
-        }
 
         public string SaveResult(StudentExam studentExam)
         {
@@ -150,7 +137,6 @@ namespace Project.BLL.repo
                 return "I wish you success";
             }
             catch (Exception ex) {
-
                 return "somthing wrong";
             }
         } 

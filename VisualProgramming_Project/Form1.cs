@@ -12,11 +12,6 @@ namespace VisualProgramming_Project
         }
 
         TeacherRepo teacherRepo = new TeacherRepo();
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
         void clearText() { 
             textBox1.Clear();
             textBox2.Clear();

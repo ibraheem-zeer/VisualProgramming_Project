@@ -129,8 +129,6 @@ namespace Project.BLL.repo
                 }
                 else
                     return "Not Found";
-
-
             }
             catch (Exception e) {
                 return "Internal Server Error";
@@ -141,7 +139,6 @@ namespace Project.BLL.repo
         {
             try
             {
-
                 Exam exam = context.Exams.Find(id);
 
                 if (exam != null)
@@ -153,8 +150,6 @@ namespace Project.BLL.repo
                 }
                 else
                     return "Not Found";
-
-
             }
             catch (Exception e)
             {
@@ -173,12 +168,8 @@ namespace Project.BLL.repo
                     context.Students.Remove(student);
                     context.SaveChanges();
                     return "sucess";
-
                 }
-                else
-                    return "Not Found";
-
-
+                else return "Not Found";
             }
             catch (Exception e)
             {
@@ -190,20 +181,14 @@ namespace Project.BLL.repo
         {
             try
             {
-
                 Teacher teacher = context.Teachers.Find(id);
-
                 if (teacher != null)
                 {
                     context.Teachers.Remove(teacher);
                     context.SaveChanges();
                     return "sucess";
-
                 }
-                else
-                    return "Not Found";
-
-
+                else return "Not Found";
             }
             catch (Exception e)
             {
@@ -211,59 +196,39 @@ namespace Project.BLL.repo
             }
         }
 
-        public ICollection<Course> GetAllCourses()
-        {
-            return context.Courses.ToList();
-        }
+        public ICollection<Course> GetAllCourses() => context.Courses.ToList();
 
-        public ICollection<Exam> GetAllExams()
-        {
-            return context.Exams.ToList();
-        }
+        public ICollection<Exam> GetAllExams() => context.Exams.ToList();
 
-        public ICollection<Student> GetAllStudents()
-        {
-            return context.Students.ToList();
-        }
+        public ICollection<Student> GetAllStudents() => context.Students.ToList();
 
-        public ICollection<Teacher> GetAllTeachers()
-        {
-            return context.Teachers.ToList();
-        }
+        public ICollection<Teacher> GetAllTeachers() => context.Teachers.ToList();
 
         public Course GetCourse(int id)
         {
             Course course = context.Courses.Find(id);
-            if (course == null)
-                return null;
-
+            if (course == null) return null;
             return course;
         }
 
         public Exam GetExam(int id)
         {
             Exam exam = context.Exams.Find(id);
-            if (exam == null)
-                return null;
-               
+            if (exam == null) return null;
             return exam;
         }
 
         public Student GetStudent(int id)
         {
             Student student = context.Students.Find(id);
-            if (student == null)
-                return null;
-
+            if (student == null) return null;
             return student;
         }
 
         public Teacher GetTeacher(int id)
         {
             Teacher teacher = context.Teachers.Find(id);
-            if (teacher == null)
-                return null;
-
+            if (teacher == null) return null;
             return teacher;
         }
 
@@ -271,8 +236,6 @@ namespace Project.BLL.repo
         {
             try
             {
-
-
                 if (course != null)
                 {
                     context.Update(course);
@@ -281,7 +244,6 @@ namespace Project.BLL.repo
                 }
                 else
                     return "Course Not Found";
-
             }
             catch (Exception e) {
                 return "Internal Server Error";
@@ -300,7 +262,6 @@ namespace Project.BLL.repo
                 }
                 else
                     return "Exam Not Found";
-
             }
             catch (Exception e)
             {
@@ -320,7 +281,6 @@ namespace Project.BLL.repo
                 }
                 else
                     return "Student Not Found";
-
             }
             catch (Exception e)
             {
@@ -340,7 +300,6 @@ namespace Project.BLL.repo
                 }
                 else
                     return "Teacher Not Found";
-
             }
             catch (Exception e)
             {

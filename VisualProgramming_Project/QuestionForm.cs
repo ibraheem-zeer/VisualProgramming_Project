@@ -42,7 +42,6 @@ namespace VisualProgramming_Project
 
         private void button1_Click(object sender, EventArgs e)
         {
-
             var question = new Question()
             {
                 Title = textBox1.Text,
@@ -57,7 +56,6 @@ namespace VisualProgramming_Project
             Clear();
             LoadQuestion();
         }
-
         private void button2_Click(object sender, EventArgs e)
         {
             int id = Convert.ToInt32(ExamDetails.CurrentRow.Cells["Id"].Value);
@@ -75,29 +73,18 @@ namespace VisualProgramming_Project
             int id = Convert.ToInt32(ExamDetails.CurrentRow.Cells["Id"].Value);
             Question question = new Question();
             if (textBox1.Text != "")
-            {
                 question.Title = textBox1.Text;
-            }
             if (textBox2.Text != "")
-            {
                 question.Choice1 = textBox2.Text;
-            }
             if (textBox3.Text != "")
-            {
                 question.Choice2 = textBox3.Text;
-            }
             if (textBox4.Text != "")
-            {
                 question.Choice3 = textBox4.Text;
-            }
             if (textBox5.Text != "")
-            {
                 question.Choice4 = textBox5.Text;
-            }
             if (textBox6.Text != "")
-            {
                 question.Answer = textBox6.Text;
-            }
+
             questionReop.UpdateQuestion(question);
             LoadQuestion();
             Clear();
