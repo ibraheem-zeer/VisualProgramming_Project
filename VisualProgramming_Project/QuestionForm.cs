@@ -1,4 +1,4 @@
-﻿using Project.BLL.Interfaces;
+using Project.BLL.Interfaces;
 using Project.BLL.repo;
 using Project.DAL.Data.Models;
 using System;
@@ -42,6 +42,7 @@ namespace VisualProgramming_Project
 
         private void button1_Click(object sender, EventArgs e)
         {
+            var question = new Question()
             if (textBox1.Text.Equals("")
                 ||textBox2.Text.Equals("")
                 || textBox3.Text.Equals("")
@@ -77,7 +78,6 @@ namespace VisualProgramming_Project
             }
             else MessageBox.Show("The answer didnt match");
         }
-
         private void button2_Click(object sender, EventArgs e)
         {
             if (ExamDetails.CurrentRow == null)
@@ -108,29 +108,18 @@ namespace VisualProgramming_Project
             Question question = questionReop.getQuestion(id);
 
             if (textBox1.Text != "")
-            {
                 question.Title = textBox1.Text;
-            }
             if (textBox2.Text != "")
-            {
                 question.Choice1 = textBox2.Text;
-            }
             if (textBox3.Text != "")
-            {
                 question.Choice2 = textBox3.Text;
-            }
             if (textBox4.Text != "")
-            {
                 question.Choice3 = textBox4.Text;
-            }
             if (textBox5.Text != "")
-            {
                 question.Choice4 = textBox5.Text;
-            }
             if (textBox6.Text != "")
-            {
                 question.Answer = textBox6.Text;
-            }
+
             questionReop.UpdateQuestion(question);
             LoadQuestion();
             Clear();

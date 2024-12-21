@@ -20,7 +20,7 @@ namespace Project.BLL.repo
                 if (question == null) return "there is something wrong!";
                 context.Questions.Add(question);
                 context.SaveChanges();
-                return "Success!";
+                return "Question Added successfully!";
             }
             catch
             {
@@ -34,8 +34,7 @@ namespace Project.BLL.repo
             {
                 var findQuestion = context.Questions.Find(id);
                 context.Questions.Remove(findQuestion);
-                context.SaveChanges();
-                return "Deleted Successfully";
+                return "Question Deleted Successfully";
             }
             catch
             {
@@ -44,10 +43,7 @@ namespace Project.BLL.repo
 
         }
 
-        public ICollection<Question> GetAllQuestions(int id)
-        {
-            return context.Questions.Where(x => x.ExamId == id).ToList();
-        }
+        public ICollection<Question> GetAllQuestions(int id) => context.Questions.Where(x => x.ExamId == id).ToList();
 
         public Question getQuestion(int id)
         {
