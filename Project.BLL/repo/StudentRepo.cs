@@ -119,7 +119,7 @@ namespace Project.BLL.repo
 
         public ICollection<Exam> GetExams(int idCourse)
         {
-            return context.Exams.Where(x=>x.CourseId == idCourse).ToList();
+            return context.Exams.Include(s=>s.Students).Where(x=>x.CourseId == idCourse).ToList();
         }
 
         public ICollection<Question> GetQuestion(int idExam)
@@ -140,5 +140,19 @@ namespace Project.BLL.repo
                 .Where(c => c.Students.Any(s => s.StudentId == id)) 
                 .ToList();
         }
+
+        public string SaveResult(StudentExam studentExam)
+        {
+            try
+            {
+                context.StudentExams.Add(studentExam);
+                context.SaveChanges();
+                return "I wish you success";
+            }
+            catch (Exception ex) {
+
+                return "somthing wrong";
+            }
+        } 
     }
 }

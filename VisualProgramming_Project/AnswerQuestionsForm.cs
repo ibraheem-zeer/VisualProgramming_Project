@@ -31,11 +31,9 @@ namespace VisualProgramming_Project
         private void SubmitBtn_Click(object sender, EventArgs e)
         {
             if (radioButton1.Checked && radioButton1.Text == question.Answer) GHelpers.result++;
-       
-            
+                   
             if (radioButton2.Checked && radioButton2.Text == question.Answer) GHelpers.result++;
        
-
             if (radioButton3.Checked && radioButton3.Text == question.Answer) GHelpers.result++;
 
             if (radioButton4.Checked && radioButton4.Text == question.Answer) GHelpers.result++;

@@ -56,31 +56,79 @@ namespace VisualProgramming_Project
         }
         private void startExam_Click(object sender, EventArgs e)
         {
-            int id = Convert.ToInt32(examsDataGridView.CurrentRow.Cells["Id"].Value);
-            var questions = studentRepo.DoExam(id);
-            if (questions is null)
+
+            if (examsDataGridView.CurrentRow == null)
             {
-                MessageBox.Show("Don't Cheat man!");
+                MessageBox.Show("Select the COURSE !!!!!!!!!");
+                return;
+            }
+            if (yourCoursesDataGridView == null)
+            {
+                MessageBox.Show("Select the EXAM !!!!!!!!!");
+                return;
+            }
+            int id = Convert.ToInt32(examsDataGridView.CurrentRow.Cells["Id"].Value);
+            int courseid = Convert.ToInt32(yourCoursesDataGridView.CurrentRow.Cells["Id"].Value);
+
+
+            var exam = studentRepo.GetExams(courseid).Where(s => s.Id == id).Single();
+            StudentExam? find = exam.Students.Where(s => s.StudentId == thisStudent.Id).FirstOrDefault();
+            if (find == null)
+            {
+                var questions = studentRepo.DoExam(id);
+                if (questions is null)
+                {
+                    MessageBox.Show("Check your clock and maybe your teacher didnt make questions");
+
+                }
+                else
+                {
+                    var studentExam = new StudentExam()
+                    {
+                        StudentId = thisStudent.Id,
+                        ExamId = exam.Id,
+                        Result = GHelpers.result
+                    };
+                    AnswerQuestionsForm answerQuestionsForm;
+                    foreach (var question in questions)
+                    {
+                        DateTime currentDateTime = DateTime.Now;
+                        DateTime examEndDateTime = exam.Date.Add(exam.EndTime);
+
+
+                        if (currentDateTime <= examEndDateTime)
+                        {
+                            answerQuestionsForm = new AnswerQuestionsForm(question);
+                            answerQuestionsForm.ShowDialog();
+                            studentExam.Result = GHelpers.result;
+                        }
+                        else
+                        {
+
+                            MessageBox.Show("GG");
+                            break;
+
+                        }
+                    }
+                    MessageBox.Show(studentRepo.SaveResult(studentExam));
+
+                }
             }
             else
             {
-                var studentExam = new StudentExam()
-                {
-                    StudentId = thisStudent.Id,
-                    ExamId = id,
-                    Result = GHelpers.result
-                };
-                AnswerQuestionsForm answerQuestionsForm;
-                foreach (var question in questions)
-                {
-                    answerQuestionsForm = new AnswerQuestionsForm(question);
-                    answerQuestionsForm.ShowDialog();
-                }
+
+                MessageBox.Show("niga");
             }
         }
 
         private void rollCourse_Click(object sender, EventArgs e)
         {
+            if (coursesDataGridView.CurrentRow == null)
+            {
+                MessageBox.Show("Select the COURSE !!!!!!!!!");
+                return;
+            }
+
             int id = Convert.ToInt32(coursesDataGridView.CurrentRow.Cells["Id"].Value);
             Course course = studentRepo.GetCourse(id);
 
@@ -132,11 +180,22 @@ namespace VisualProgramming_Project
 
         private void unRoll_Click(object sender, EventArgs e)
         {
+            if (coursesDataGridView.CurrentRow == null)
+            {
+                MessageBox.Show("Select the COURSE !!!!!!!!!");
+                return;
+            }
             int id = Convert.ToInt32(coursesDataGridView.CurrentRow.Cells["Id"].Value);
+
+            DialogResult dialogResult = MessageBox.Show("Are you sure", "!!!!", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            if (dialogResult == DialogResult.No)
+            {
+                return;
+            }
 
             Course course = studentRepo.GetCourse(id);
             List<StudentCourse> courses = studentRepo.GetAllStudentCourses(thisStudent.Id).ToList();
-            StudentCourse existingCourse = courses.FirstOrDefault(e => e.StudentId == thisStudent.Id);
+            StudentCourse existingCourse = courses.FirstOrDefault(e => e.StudentId == thisStudent.Id && e.CourseId == id);
 
             if (existingCourse != null)
             {
@@ -147,7 +206,7 @@ namespace VisualProgramming_Project
             }
             else
             {
-                MessageBox.Show("Student removed form this course");
+                MessageBox.Show("Go and steal the course");
             }
         }
 
@@ -159,8 +218,14 @@ namespace VisualProgramming_Project
 
         private void seeResult_Click(object sender, EventArgs e)
         {
+            if (examsDataGridView.CurrentRow == null)
+            {
+                MessageBox.Show("Select the EXAM !!!!!!!!!");
+                return;
+             }
             int id = Convert.ToInt32(examsDataGridView.CurrentRow.Cells["Id"].Value);
             MessageBox.Show(studentRepo.SeeResult(id));
+           
         }
     }
 }

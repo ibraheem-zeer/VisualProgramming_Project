@@ -20,5 +20,6 @@ namespace Project.BLL.Interfaces
         string Enroll(StudentCourse studentcourse);
         ICollection<Question> DoExam(int id);
         string SeeResult(int id);
+        string SaveResult(StudentExam studentExam);
     }
 }
