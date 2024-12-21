@@ -12,8 +12,7 @@ namespace Project.BLL.Interfaces
         string Login(string Email, string Password);
         Teacher GetTeacherByEmail(string email);
         ICollection<Exam> ViewExams(int id);
-        void CompleteExam(int id);
         ICollection<Course> ViewAssignedCourse(string email);
-        int ViewResultOfExam(int id);
+        ICollection<StudentExam> ViewResultOfExam(int id);
     }
 }

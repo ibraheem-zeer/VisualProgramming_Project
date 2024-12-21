@@ -31,6 +31,6 @@ namespace Project.BLL.Interfaces
         string CreateExam(Exam exam);
         string UpdateExam(Exam exam);
         string DeleteExam(int id);
-        string ViewResult();
+        string ViewResult(int id);
     }
 }

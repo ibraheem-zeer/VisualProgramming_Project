@@ -23,22 +23,6 @@ namespace VisualProgramming_Project
             InitializeComponent();
         }
 
-        private void TeacherForm_Load(object sender, EventArgs e)
-        {
-            var teacherEmail = teacherRepo.GetTeacherByEmail(TeacherEmail);
-            var courses = teacherRepo.ViewAssignedCourse(TeacherEmail);
-            foreach (var course in courses)
-            {
-                TeacherCoursesList.Items.Add(course.Name, course.Description);
-            }
-            LoadAssignCourses();
-        }
-
-        private void TeacherCoursesList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         void LoadAssignCourses()
         {
             yourCoursesDataGridView.DataSource = teacherRepo.ViewAssignedCourse(TeacherEmail)
@@ -76,6 +60,11 @@ namespace VisualProgramming_Project
 
         private void CompleteExam_Click(object sender, EventArgs e)
         {
+            if (examsDataGridView.CurrentRow == null)
+            {
+                MessageBox.Show("Select the Exam !!!!!!!!!");
+                return;
+            }
             int id = Convert.ToInt32(examsDataGridView.CurrentRow.Cells["Id"].Value);
             QuestionForm questionForm = new QuestionForm();
             questionForm.examId = id;
@@ -90,7 +79,31 @@ namespace VisualProgramming_Project
 
         private void seeResult_Click(object sender, EventArgs e)
         {
+            if (examsDataGridView.CurrentRow == null)
+            {
+                MessageBox.Show("Select the Exam !!!!!!!!!");
+                return;
+            }
+            int id = Convert.ToInt32(examsDataGridView.CurrentRow.Cells["Id"].Value);
 
+            var resultofexam = teacherRepo.ViewResultOfExam(id);
+            string n = "";
+            foreach (var exam in resultofexam)
+            {
+                n = n + $"Student Name {exam.Student.Name} The Result = $ {exam.Result} \n";
+
+            }
+            if (n=="")
+            {
+                n = "no one take the exam";
+            }
+            MessageBox.Show(n);
+
+        }
+
+        private void TeacherForm_Load(object sender, EventArgs e)
+        {
+            LoadAssignCourses();
         }
     }
 }
