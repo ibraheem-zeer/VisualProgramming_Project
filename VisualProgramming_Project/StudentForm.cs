@@ -94,6 +94,7 @@ namespace VisualProgramming_Project
                         {
                             answerQuestionsForm = new AnswerQuestionsForm(question);
                             answerQuestionsForm.ShowDialog();
+
                             studentExam.Result = GHelpers.result;
                         }
                         else

@@ -21,6 +21,7 @@ namespace Project.BLL.Interfaces
         Exam GetExam(int id);
         int EnrolledCount(int id);
         int MaxResult(int id);
+        int MinResult(int id);
 
         string CreateStudent(Student student);
         string UpdateStudent(Student student);

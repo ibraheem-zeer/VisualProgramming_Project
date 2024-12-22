@@ -363,34 +363,60 @@ namespace VisualProgramming_Project
         }
         private void button2_Click_1(object sender, EventArgs e)
         {
+            if (courseComboBox.SelectedIndex == -1)
+            {
+                MessageBox.Show("Select Course");
+                return;
+            }
             var id = int.Parse(courseComboBox.SelectedItem.ToString());
             MessageBox.Show(admin.EnrolledCount(id).ToString());
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
+            if (examComboBox.SelectedIndex == -1)
+            {
+                MessageBox.Show("Select Exam");
+                return;
+            }
             var id = int.Parse(examComboBox.SelectedItem.ToString());
-            MessageBox.Show(admin.MaxResult(id).ToString() + "Teeeeeeeeeesttttttttt");
+            MessageBox.Show(admin.MaxResult(id).ToString());
         }
 
         private void TeacherBtn_Click(object sender, EventArgs e)
         {
+            if (teacherComboBox.SelectedIndex == -1)
+            {
+                MessageBox.Show("Select Teacher");
+                return;
+            }
             var id = int.Parse(teacherComboBox.SelectedItem.ToString());
             var exams = admin.GetAllExams(id);
 
-            TeacherListView.Items.Clear();
+            TeacherListBox.Items.Clear();
 
             if (exams != null && exams.Any())
             {
                 foreach (var exam in exams)
                 {
-                    TeacherListView.Items.Add(exam.Name);
+                    TeacherListBox.Items.Add(exam.Name);
                 }
             }
             else
             {
                 MessageBox.Show("No exams found for the selected teacher.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (studentComboBox.SelectedIndex == -1)
+            {
+                MessageBox.Show("Select Student");
+                return;
+            }
+            var id = int.Parse(studentComboBox.SelectedItem.ToString());
+            MessageBox.Show(admin.MinResult(id).ToString());
         }
     }
 }

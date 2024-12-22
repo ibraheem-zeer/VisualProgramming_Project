@@ -13,10 +13,6 @@ namespace Project.BLL.repo
     public class TeacherRepo : ITeacher
     {
         AppDbContext context = new AppDbContext();
-        public void CompleteExam(int id)
-        {
-            throw new NotImplementedException();
-        }
 
         public Teacher GetTeacherByEmail(string email)
         {

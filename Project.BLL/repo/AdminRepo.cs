@@ -262,6 +262,17 @@ namespace Project.BLL.repo
             return Convert.ToInt32(maxResult);
         }
 
+        public int MinResult(int id)
+        {
+            var minResult = context.StudentExams
+                                   .Where(se => se.StudentId == id)
+                                   .OrderBy(se => se.Result)
+                                   .Select(se => se.Result)
+                                   .FirstOrDefault();
+
+            return Convert.ToInt32(minResult);
+        }
+
         public string UpdateCourse(Course course)
         {
             try
